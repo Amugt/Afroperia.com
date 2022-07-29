@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <nav>
+      <ul>
+          <li>
+              <a href="{% url 'manage_hotel' %}">manage hotel</a>
+          </li>|
+          <li><a href="{% url 'manage_payment_method' %}">manage payment method</a></li>|
+          <li>hotels requests </li>|
+          <li><a href=" ">serve customers/manage chat</a></li>
+          <li><a href="{% url 'manage_city' %}">manage city</a> </li>
+          <li> <a href="{% url 'manage_feature' %}">manage features</a></li>
+
+
+      </ul>
+    </nav>
+</head>
+<body>
+
+<h2>hotels</h2>
+{% for hotel in hotels %}
+{{ hotel.name}}
+ {% endfor %}
+
+<h3> messages </h3>
+
+<h2>hotel request</h2>
+ <a href="{% url 'logout' %}">logout</a>
+</body>
+</html>

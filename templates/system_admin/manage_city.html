@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for city in cities %}
+
+{{ city.name }},
+{{ city.region }}
+
+<a href="{% url 'update_city'  city.id %}">edit</a>
+<br>
+{%endfor %}
+<a href="{% url 'add_city'  %}">add city</a>
+</body>
+</html>

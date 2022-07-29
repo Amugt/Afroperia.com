@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{{ payment_information.count }}
+{% for payment in payment_information %}
+
+<a href="{% url 'payment_detail' booking_request_id payment.id %}">{{ payment.payment_method.name}}</a>
+
+
+{% endfor %}
+
+</body>
+</html>

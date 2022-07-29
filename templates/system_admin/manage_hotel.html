@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for hotel in hotels %}
+{{ hotel.name }} <br>
+{{ hotel.city.name }} <br>
+<br>{{ hotel.relative_location }}
+<a href="{% url 'update_hotel'  hotel.id %}">edit</a>
+
+{% endfor %}
+<a href="{% url 'add_hotel' %}">add hotel</a>
+</body>
+</html>

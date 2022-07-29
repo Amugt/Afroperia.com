@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for feature in features %}
+
+{{ feature.name }},
+{{ feature.type }}
+<a href="{% url 'update_feature'  feature.id %}">edit</a>
+<br>
+{%endfor %}
+<a href="{% url 'add_feature'  %}">add feature</a>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>selected payment method information</h3>
+{{ payment_details.account_number }}
+
+ you have to pay {{ price }} birr
+
+
+<h3>fill out this form after you finish your payment</h3>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="save">
+</form>
+
+<h3>rooms will be reserved</h3>
+{% for requested_room in requested_rooms %}
+
+{{ requested_room.type }}<br>
+{{ requested_room.price }}
+<br>
+{% endfor %}
+
+</body>
+</html>
