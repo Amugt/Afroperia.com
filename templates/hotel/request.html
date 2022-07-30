@@ -33,8 +33,8 @@
 
                                             <tr>
                                                 <td>{{ booking_request.customer.first_name   }} {{ booking_request.customer.last_name}}</td>
-                                                <td>{{ booking_request.check_in_date }}</td>
-                                                <td> {{ booking_request.check_out_date }}</td>
+                                                <td>{{ booking_request.check_in_date|date:'d M Y' }}</td>
+                                                <td> {{ booking_request.check_out_date|date:'d M Y' }}</td>
                                                 <td>{% for room in booking_request.room.all  %}
                                                     {{ room.type }} , {% endfor %}
                                                 </td>
@@ -58,6 +58,7 @@
                                                     <a href="{% url 'request_detail' booking_request.id %}?q=paid"><button class="btn btn-danger">{{ booking_request.status }}</button></a>
                                                     {% endif %}
                                                 </td>
+                                         <td>{{ booking_request.status }}</td>
                                         </tbody>
                                         {% endfor %}
 

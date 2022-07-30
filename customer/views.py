@@ -10,9 +10,9 @@ from system_admin.models import Hotel
 from hotel.models import Room, PaymentInformation
 from .decorators import allowed_users
 from django.contrib import messages
-
 # Create your views here.
 from .forms import PaidForm
+from datetime import date
 
 
 def index(request):

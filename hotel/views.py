@@ -12,6 +12,7 @@ from hotel.models import Room
 from system_admin.models import User
 from system_admin.forms import UserForm
 from .decorators import allowed_users
+from datetime import date
 
 
 @never_cache
@@ -105,29 +106,6 @@ def customer_request(request):
     return render(request, 'hotel/request.html', context)
 
 
-def price_calculator(booking):
-    price = []
-    price1 = []
-    for item in booking:
-        total = item.room.price * item.number_of_room
-        total_price = {'id': item.booking_request.id, 'price': total}
-        price.append(total_price)
-
-    yes = 0
-    for item in booking:
-        for obj in price:
-            if obj['id'] == item.booking_request.id:
-                yes = yes + obj['price']
-        total_price1 = {'id': item.booking_request.id, 'price': yes}
-        for objs in price1:
-            if objs['id'] == total_price1['id']:
-                break
-        else:
-            price1.append(total_price1)
-            yes = 0
-    return price1
-
-
 @allowed_users
 def request_detail(request, id):
     booking_request = BookingRequest.objects.get(id=id)
@@ -175,3 +153,42 @@ def add_payment_information(request):
             return redirect('hotel')
     context = {'form': form}
     return render(request, 'hotel/add_payment_information.html', context)
+
+
+def price_calculator(booking):
+    price = []
+    price1 = []
+    for item in booking:
+        check_in = date(item.booking_request.check_in_date.year, item.booking_request.check_in_date.month,
+                        item.booking_request.check_in_date.day)
+        check_out = date(item.booking_request.check_out_date.year, item.booking_request.check_out_date.month,
+                         item.booking_request.check_out_date.day)
+        delta = check_out - check_in
+        night = delta.days
+        total = item.room.price * item.number_of_room * night
+        total_price = {'id': item.booking_request.id, 'price': total}
+        price.append(total_price)
+
+    yes = 0
+    for item in booking:
+        for obj in price:
+            if obj['id'] == item.booking_request.id:
+                yes = yes + obj['price']
+        total_price1 = {'id': item.booking_request.id, 'price': yes}
+        for objs in price1:
+            if objs['id'] == total_price1['id']:
+                break
+        else:
+            price1.append(total_price1)
+            yes = 0
+    return price1
+
+
+def booking_request_handler():
+    booking_requests = BookingRequest.objects.all()
+    for booking_request in booking_requests:
+        check_out = date(booking_request.check_out_date.year, booking_request.check_out_date.month,
+                         booking_request.check_out_date.day)
+        if check_out <= date.today():
+            booking_request.status = "expired"
+            booking_request.delete()
