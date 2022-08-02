@@ -1,0 +1,160 @@
+{% extends 'main.html' %}
+{% block content %}
+<main id="main">
+
+
+    <section id="about" class="about mt-2">
+        <div class="container">
+
+            <div class="row gy-4 mt-2">
+
+                <div class="row gy-4 align-items-center features-item">
+
+                    <div class="col-md-5">
+                        <img src="{{ hotel.picture.url }}" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-md-7">
+                        <h3>{{ hotel.name }}</h3>
+                        <p class="fst-italic">
+                            {{ hotel.description}}</p>
+                        <ul>
+                            <li><i class="bi bi-check"></i> we are found at {{ hotel.city.name }} ,
+                                {{ hotel.city.region }}, {{ hotel.city.country }}
+                            </li>
+                            <li><i class="bi bi-check"></i> our specific area is {{ hotel.relative_location }} in
+                                {{ hotel.city}} city
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row gy-4 mt-1">
+                {% for feature in features %}
+                <div class="col-lg-6">
+                    <div class="info-item d-flex">
+                        <i class="bi bi-geo-alt flex-shrink-0"></i>
+                        <div>
+                            <h4>{{ feature.name }}</h4>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+
+
+
+
+
+
+            <div class="row">
+                {%  for room in rooms %}
+                <div class="col-lg-3">
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="{{room.picture.url}}" alt="" class="img-fluid">
+                        </div>
+                        <h6><a href="#" class="stretched-link">{{ room.type }}</a></h6>
+                        <span>price {{room.price}}birr per night</span>
+                        {%  for feature in room.Feature.all %}
+
+                        <p>
+
+                            {{ feature.name }}
+                        </p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% endfor %}
+
+
+
+            </div>
+
+
+
+
+        </div>
+    </section>
+    <div class="container">
+        <div class="location row">
+            <div class="map col-lg-6">
+                <iframe src="{{hotel.absolute_location}}" width="600" height="450" style="border:0;" allowfullscreen=""
+                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 Book card p-2 booking">
+        <form action="" method="post" role="form" class="php-email-form">
+            {% csrf_token %}
+
+            <div class="dates">
+                <div>
+                    <label for="checkin">Checkin</label>
+                    <input required type="date" class="form-control datepcker" name="check_in_date" id="checkin">
+                </div>
+                <div>
+                    <label for="checkout">Checkout</label>
+                    <input required type="date" class="form-control datepicker" name="check_out_date" id="checkout">
+                </div>
+
+            </div>
+            <div class="accordion mt-2" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseOne">
+                            Room Type
+                        </button>
+                    </h2>
+
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse "
+                        aria-labelledby="panelsStayOpen-headingOne">
+
+                        <div class="accordion-body">
+                            {% for room in rooms %}
+                            <div class="row ">
+                                <div class="col-6">
+                                    <label for="fname">{{room.type}}:</label>
+                                </div>
+                                <div class="col-6 qty">
+                                    <span class="minus bg-dark" >-</span> 
+                                    <input type="number" class="count" name="qty" value="0" id="roomno">
+                                    <span class="plus bg-dark">+</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="text-center mt-2"><button class="btn btn-primary" type="submit">Book now</button></div>
+        </form>
+    </div>
+
+</main>
+<!-- End #main -->
+{% endblock %}
